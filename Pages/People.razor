@@ -12,8 +12,7 @@
 <input placeholder="Please enter first name" @bind="@value" />
 <input placeholder="Please enter last name" @bind="@value2" />
 
-@*<input @bind="" placeholder="Please enter last name" />*@
-<button class="btn btn-primary" style="margin-bottom: 5px;" @onclick="InsertData(value, value2)">Insert data</button>
+<button class="btn btn-primary" style="margin-bottom: 5px;" @onclick="InsertData">Insert data</button>
 <button class="btn btn-warning" style="margin-bottom: 5px;" @onclick="UpdateData">Update data</button>
 <button class="btn btn-danger" style="margin-bottom: 5px;" @onclick="DeleteData">Delete data</button>
 
@@ -38,10 +37,10 @@ else
     public string value2;
 
 
-    private async Task InsertData(string fistName, string lastName)
+    private async Task InsertData()
     {
         string sql = "insert into people (FirstName, LastName) value (@FirstName, @LastName);";
-        await _data.SaveData(sql, new { FirstName = fistName, LastName = lastName }, _config.GetConnectionString("default"));
+        await _data.SaveData(sql, new { FirstName = value, LastName = value2 }, _config.GetConnectionString("default"));
         await OnInitializedAsync();
     }
 
@@ -55,7 +54,7 @@ else
     private async Task DeleteData()
     {
         string sql = "delete from people where FirstName = @FirstName";
-        await _data.SaveData(sql, new { FirstName = "Uktam" }, _config.GetConnectionString("default"));
+        await _data.SaveData(sql, new { FirstName = value }, _config.GetConnectionString("default"));
         await OnInitializedAsync();
     }
 
